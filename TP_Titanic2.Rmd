@@ -1,0 +1,132 @@
+---
+title: "TP_Titanic2"
+author: "PALOMBIER William"
+date: "2024-11-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# Charger les packages nécessaires
+library(carData)
+library(ggplot2)
+```
+
+```{r}
+# Charger les données TitanicSurvival
+data("TitanicSurvival", package = "carData")
+
+# Présenter les données
+summary(TitanicSurvival)
+```
+
+```{r}
+# Visualiser la répartition des survivants en fonction du sexe et de la classe
+```
+
+```{r}
+survival_by_sex <- ggplot(TitanicSurvival, aes(x = sex, fill = survived)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Répartition des survivants par sexe", x = "Sexe", y = "Nombre de personnes")
+```
+
+```{r}
+survival_by_class <- ggplot(TitanicSurvival, aes(x = passengerClass, fill = survived)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Répartition des survivants par classe", x = "Classe", y = "Nombre de personnes")
+```
+
+```{r}
+# Afficher les graphiques
+print(survival_by_sex)
+print(survival_by_class)
+```
+
+```{r}
+# Représenter l'âge en fonction de la variable survived
+```
+
+```{r}
+age_survived <- ggplot(TitanicSurvival, aes(x = survived, y = age)) +
+  geom_boxplot() +
+  labs(title = "Répartition de l'âge selon la survie", x = "Survécu", y = "Âge")
+
+print(age_survived)
+```
+
+```{r}
+# Interprétation des résultats
+# La répartition des survivants par sexe montre que les femmes avaient un taux de survie plus élevé que les hommes, ce qui est cohérent avec la règle "les femmes et les enfants d'abord" appliquée lors du naufrage.
+# La répartition par classe indique que les passagers de première classe avaient un taux de survie significativement plus élevé par rapport aux passagers des classes inférieures. Cela reflète le fait que les passagers de première classe avaient un meilleur accès aux canots de sauvetage.
+# La distribution de l'âge montre que les enfants avaient tendance à avoir un taux de survie plus élevé, ce qui correspond également à la priorité donnée aux femmes et aux enfants. Les passagers plus âgés semblent avoir un taux de survie plus faible.
+```
+
+```{r}
+# Étape 3 : Création d'un Package R avec des Fonctions d'Analyse
+
+# Étape 3 : Création d'un Package R avec des Fonctions d'Analyse
+
+```
+
+
+```{r}
+# Ajouter des fonctions au package
+
+# Créez un fichier "R/analyse_titanic.R" avec les fonctions suivantes :
+
+#' Calculer le taux de survie par classe
+#' @param data Le dataset à analyser
+#' @return Un data frame avec le taux de survie par classe
+#' @export
+```
+
+```{r}
+survival_rate_by_class <- function(data) {
+  aggregate(survived ~ passengerClass, data = data, FUN = function(x) mean(x == "yes"))
+}
+```
+
+```{r}
+#' Calculer le taux de survie par sexe
+#' @param data Le dataset à analyser
+#' @return Un data frame avec le taux de survie par sexe
+#' @export
+```
+
+```{r}
+survival_rate_by_sex <- function(data) {
+  aggregate(survived ~ sex, data = data, FUN = function(x) mean(x == "yes"))
+}
+```
+
+
+
+
+```{r}
+# Charger le package et utiliser les fonctions dans le document "Analyse.Rmd"
+# Charger le package et utiliser les fonctions dans le document "Analyse.Rmd"
+# Charger le package TitanicPackage
+```
+
+```{r}
+library(TitanicPackage)
+```
+
+```{r} 
+# Utiliser les fonctions pour compléter l'analyse
+```
+
+```{r}
+survival_class <- survival_rate_by_class(TitanicSurvival)
+print(survival_class)
+```
+
+```{r}
+survival_sex <- survival_rate_by_sex(TitanicSurvival)
+print(survival_sex)
+```
+
+
